@@ -1,0 +1,35 @@
+* {
+  border: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  height: 95vh;
+  width: 95;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  color: brown;
+}
+
+.btn {
+  display: none;
+}
+
+.restart {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: blue;
+  padding: 10px;
+  border-radius: 15px;
+  border: none;
+  color: white;
+  font-size: 18px;
+  margin: 10px auto;
+  cursor: pointer;
+  height: 40px;
+  width: 200px;
+}
