@@ -1,5 +1,5 @@
 let canvas = document.getElementById('snake')
-let context = canvas.getContext('2d')
+let context = canvas.getContext('2d');
 let box = 32
 let snake = []
 const bgColor = 'black'
@@ -15,7 +15,7 @@ let food = {
   x: Math.floor(Math.random() * 15 + 1) * box,
   y: Math.floor(Math.random() * 15 + 1) * box,
 }
-let fast = 100
+let fast = 15
 let medium = 100
 let slow = 100
 
@@ -33,33 +33,43 @@ function createSnake() {
     generateBox(sColor, snake[i].x, snake[i].y, box, box)
   }
 }
-
+function clearSnake() {
+  for (i = 0; i < snake.length; i++) {
+    generateBox(bgColor, snake[i].x, snake[i].y, box, box)
+  }
+}
 function drawFood() {
   generateBox(foodColor, food.x, food.y, box, box)
 }
 
 function snakeMoviment(speed) {
-  if (direction == 'right') {
-    snake.x += speed
+  clearSnake();
+  for (let item of snake) {
+    if (direction == 'right') {
+      item.x += speed
+    }
+    if (direction == 'left') {
+      item.x -= speed
+    }
+    if (direction == 'up') {
+      item.y += speed
+    }
+    if (direction == 'down') {
+      item.y -= speed
+    }
   }
-  if (direction == 'left') {
-    snake.x -= speed
-  }
-  if (direction == 'up') {
-    snake.y += speed
-  }
-  if (direction == 'down') {
-    snake.y -= speed
-  }
+  createSnake();
+  console.log("s", snake);
+
 }
 
 document.addEventListener('keydown', update)
 
 function update(e) {
   if (e.keyCode == 37 && direction != 'right') direction = 'left'
-  if (e.keyCode == 38 && direction != 'down') direction = 'up'
+  if (e.keyCode == 40 && direction != 'down') direction = 'up'
   if (e.keyCode == 39 && direction != 'left') direction = 'right'
-  if (e.keyCode == 40 && direction != 'up') direction = 'down'
+  if (e.keyCode == 38 && direction != 'up') direction = 'down'
 }
 
 function startGame() {
@@ -79,7 +89,6 @@ function startGame() {
 }
 
 createBG()
-createSnake()
 drawFood()
 
 let snakeX = snake[0].x
