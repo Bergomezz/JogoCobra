@@ -1,23 +1,26 @@
-let canvas = document.getElementById('snake')
-let context = canvas.getContext('2d');
-let box = 32
-let snake = []
+const canvas = document.getElementById('snake')
+const context = canvas.getContext('2d');
+const box = 32
 const bgColor = 'black'
 const sColor = 'white'
 const foodColor = 'red'
 
-snake[0] = {
+const snake = [{
   x: 8 * box,
   y: 8 * box,
-}
+}]
+
 let direction = 'right'
 let food = {
   x: Math.floor(Math.random() * 15 + 1) * box,
   y: Math.floor(Math.random() * 15 + 1) * box,
 }
-let fast = 15
-let medium = 100
-let slow = 100
+
+const speeds = {
+  fast: 15,
+  medium: 100,
+  slow: 100,
+}
 
 function generateBox(color, x, y, w, h) {
   context.fillStyle = color
@@ -29,20 +32,38 @@ function createBG() {
 }
 
 function createSnake() {
-  for (i = 0; i < snake.length; i++) {
-    generateBox(sColor, snake[i].x, snake[i].y, box, box)
+  for (let i = 0; i < snake.length; i++) {
+    const { x, y } = snake[i]
+    generateBox(sColor, x, y, box, box)
   }
 }
+
 function clearSnake() {
-  for (i = 0; i < snake.length; i++) {
-    generateBox(bgColor, snake[i].x, snake[i].y, box, box)
+  for (let i = 0; i < snake.length; i++) {
+    const { x, y } = snake[i]
+    generateBox(bgColor, x, y, box, box)
   }
 }
+
 function drawFood() {
   generateBox(foodColor, food.x, food.y, box, box)
 }
 
-function snakeMoviment(speed) {
+function moveSnake(speed) {
+  clearSnake();
+  snake.forEach((item) => {
+    if (direction === 'right' && item.x < 16 * box) {
+      item.x += speed
+    } else if (direction === 'left' && item.x > 0) {
+      item.x -= speed
+    } else if (direction === 'up' && item.y > 0) {
+      item.y -= speed
+    } else if (direction === 'down' && item.y < 16 * box) {
+      item.y += speed
+    }
+  })
+
+/*function snakeMoviment(speed) {
   clearSnake();
   for (let item of snake) {
     if (direction == 'right') {
@@ -62,7 +83,8 @@ function snakeMoviment(speed) {
   console.log("s", snake);
 
 }
-
+*/
+  
 document.addEventListener('keydown', update)
 
 function update(e) {
